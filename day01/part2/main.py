@@ -8,6 +8,7 @@ file = open(os.path.join(script_dir, 'input.txt'), 'r')
 
 lines = file.readlines()
 lines = [line.strip() for line in lines]
+file.close()
 
 windows = []
 counter = 0
