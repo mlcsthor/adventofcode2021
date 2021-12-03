@@ -1,4 +1,5 @@
 import os
+import numpy
 
 
 def get_data(day):
@@ -15,10 +16,10 @@ def get_input(day):
 
 def open_file(day, filename):
     script_dir = os.path.dirname(__file__)
-    file = open(os.path.join(script_dir, "..", f"day{day}", f"{filename}.txt"), 'r')
+    file_path = os.path.join(script_dir, "..", f"day{day}", f"{filename}.txt")
 
-    lines = file.readlines()
-    lines = [line.strip() for line in lines]
-    file.close()
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
 
+    lines = numpy.array([line.strip() for line in lines])
     return lines
