@@ -1,6 +1,6 @@
 from utils import utils
 from math import inf
-from numpy import array, percentile
+from numpy import array, percentile, mean
 
 
 def calc_min_fuel(crabs):
@@ -14,21 +14,14 @@ def calc_min_fuel(crabs):
 
 
 def calc_min_fuel_with_rate(crabs):
-    min_position = min(crabs)
-    max_position = max(crabs)
+    position = int(mean(input_data))
 
-    min_fuel = inf
-    for position in range(min_position, max_position + 1):
-        fuel = 0
+    fuel = 0
+    for crab in crabs:
+        diff = abs(position - crab)
+        fuel += int(diff * (diff + 1) / 2)
 
-        for crab in crabs:
-            diff = abs(position - crab)
-            fuel += int(diff * (diff + 1)/2)
-
-        if fuel < min_fuel:
-            min_fuel = fuel
-
-    return min_fuel
+    return fuel
 
 
 example_data, input_data = utils.get_data("07")
