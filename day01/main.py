@@ -1,9 +1,10 @@
-import math
-from utils import utils
+from utils.utils import load_data, print_answer
+from numpy import ndarray
+from math import inf
 
 
-def calc_number_of_increase(data):
-    previous_value = math.inf
+def calc_number_of_increase(data: ndarray) -> int:
+    previous_value = inf
     counter = 0
 
     for line in data:
@@ -15,8 +16,8 @@ def calc_number_of_increase(data):
     return counter
 
 
-def calc_number_of_increase_with_window(data, window_size):
-    previous_value = math.inf
+def calc_number_of_increase_with_window(data: ndarray, window_size: int) -> int:
+    previous_value = inf
     counter = 0
 
     for index in range(0, len(data) - window_size + 1):
@@ -33,19 +34,15 @@ def calc_number_of_increase_with_window(data, window_size):
     return counter
 
 
-example_data, input_data = utils.get_data("01")
+DAY = "01"
+example_data, input_data = load_data(DAY)
 
 example_count = calc_number_of_increase(example_data)
 input_count = calc_number_of_increase(input_data)
 
-print("## Part 1 ##")
-print(f"Result for example: {example_count}")
-print(f"Result for input: {input_count}")
+print_answer((example_count, input_count), DAY, part=1)
 
-WINDOW_SIZE = 3
-example_count = calc_number_of_increase_with_window(example_data, WINDOW_SIZE)
-input_count = calc_number_of_increase_with_window(input_data, WINDOW_SIZE)
+example_count = calc_number_of_increase_with_window(example_data, window_size=3)
+input_count = calc_number_of_increase_with_window(input_data, window_size=3)
 
-print("## Part 2 ##")
-print(f"Result for example: {example_count}")
-print(f"Result for input: {input_count}")
+print_answer((example_count, input_count), DAY, part=2)

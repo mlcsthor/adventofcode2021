@@ -1,17 +1,17 @@
-import numpy
-from utils import utils
+from utils.utils import load_data, print_answer
+from numpy import array, full, count_nonzero, ndarray
 
 
-def format_bound(line):
+def format_bound(line: str) -> [str]:
     return [bound.split(',') for bound in line.split('->')]
 
 
-def extract_bounds(data):
-    return numpy.array([format_bound(line) for line in data], dtype=int)
+def extract_bounds(data: ndarray) -> ndarray:
+    return array([format_bound(line) for line in data], dtype=int)
 
 
-def complete_diagram(size, coordinates, with_diagonal):
-    diag = numpy.full([size, size], 0, dtype=int)
+def complete_diagram(size: int, coordinates: ndarray, with_diagonal: bool) -> ndarray:
+    diag = full([size, size], 0, dtype=int)
 
     for line in coordinates:
         [x1, y1], [x2, y2] = line
@@ -42,17 +42,18 @@ def complete_diagram(size, coordinates, with_diagonal):
     return diag
 
 
-def count_overlapping(diagram):
-    return numpy.count_nonzero(diagram > 1)
+def count_overlapping(diagram: ndarray) -> int:
+    return count_nonzero(diagram > 1)
 
 
-def get_answer(size, data, with_diagonal=False):
+def get_answer(size: int, data: ndarray, with_diagonal: bool = False) -> int:
     bounds = extract_bounds(data)
     diagram = complete_diagram(size, bounds, with_diagonal)
     return count_overlapping(diagram)
 
 
-example_data, input_data = utils.get_data("05")
+DAY = "05"
+example_data, input_data = load_data("05")
 
 example_answer1 = get_answer(10, example_data)
 input_answer1 = get_answer(1000, input_data)
@@ -60,10 +61,5 @@ input_answer1 = get_answer(1000, input_data)
 example_answer2 = get_answer(10, example_data, with_diagonal=True)
 input_answer2 = get_answer(1000, input_data, with_diagonal=True)
 
-print("## Part 1 ##")
-print(f"Answer: {example_answer1}")
-print(f"Answer: {input_answer1}\n")
-
-print("## Part 2 ##")
-print(f"Answer: {example_answer2}")
-print(f"Answer: {input_answer2}\n")
+print_answer((example_answer1, input_answer1), DAY, part=1)
+print_answer((example_answer2, input_answer2), DAY, part=2)

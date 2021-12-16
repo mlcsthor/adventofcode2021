@@ -1,7 +1,8 @@
-from utils import utils
+from utils.utils import load_data, print_answer
+from numpy import ndarray
 
 
-def calc_pos_and_depth(data):
+def calc_pos_and_depth(data: ndarray) -> int:
     position = 0
     depth = 0
 
@@ -13,10 +14,10 @@ def calc_pos_and_depth(data):
         else:
             depth += int(value) * (-1 if direction == "up" else 1)
 
-    return position, depth
+    return position * depth
 
 
-def calc_pos_and_depth_with_aim(data):
+def calc_pos_and_depth_with_aim(data: ndarray) -> int:
     position = 0
     depth = 0
     aim = 0
@@ -30,30 +31,21 @@ def calc_pos_and_depth_with_aim(data):
         else:
             aim += int(value) * (-1 if direction == "up" else 1)
 
-    return position, depth
+    return position * depth
 
 
-def print_answer(label, position, depth):
-    print(f"Result for {label} data:")
-    print(f"Position: {position}, Depth: {depth}")
-    print(f"Answer: {position * depth}\n")
-
-
-example_data, input_data = utils.get_data("02")
+DAY = "02"
+example_data, input_data = load_data(DAY)
 
 example_data = [line.split() for line in example_data]
 input_data = [line.split() for line in input_data]
 
-example_pos, example_depth = calc_pos_and_depth(example_data)
-input_pos, input_depth = calc_pos_and_depth(input_data)
+example_pos_depth = calc_pos_and_depth(example_data)
+input_pos_depth = calc_pos_and_depth(input_data)
 
-print("## Part 1 ##")
-print_answer("example", example_pos, example_depth)
-print_answer("input", input_pos, input_depth)
+print_answer((example_pos_depth, input_pos_depth), DAY, part=1)
 
-example_pos, example_depth = calc_pos_and_depth_with_aim(example_data)
-input_pos, input_depth = calc_pos_and_depth_with_aim(input_data)
+example_pos_depth = calc_pos_and_depth_with_aim(example_data)
+input_pos_depth = calc_pos_and_depth_with_aim(input_data)
 
-print("## Part 2 ##")
-print_answer("example", example_pos, example_depth)
-print_answer("input", input_pos, input_depth)
+print_answer((example_pos_depth, input_pos_depth), DAY, part=2)

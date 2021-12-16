@@ -1,9 +1,5 @@
-from utils import utils
+from utils.utils import load_data, print_answer, clamp
 from numpy import array, count_nonzero
-
-
-def clamp(num, min_value, max_value):
-    return max(min(num, max_value), min_value)
 
 
 def calc_risk_level_sum(data):
@@ -34,13 +30,12 @@ def calc_risk_level_sum(data):
     return risk_sum
 
 
-example_data, input_data = utils.get_data("09")
+DAY = "09"
+example_data, input_data = load_data(DAY)
 example_data = array([list(line) for line in example_data]).astype(int)
 input_data = array([list(line) for line in input_data]).astype(int)
 
 example_answer = calc_risk_level_sum(example_data)
 input_answer = calc_risk_level_sum(input_data)
 
-print("## Part 1 ##")
-print(f"Answer: {example_answer}")
-print(f"Answer: {input_answer}\n")
+print_answer((example_answer, input_answer), DAY, part=1)
